@@ -11,11 +11,10 @@ const app = express();
 app.use(express.static('public'));
 
 // Rutas
-// app.get('/', (req, res) => { // Petición Get
-//     res.json({
-//         ok: true
-//     });
-// });
+// TODO: Auth => Crear, Login, Renew
+app.use('/api/auth', require('./routes/auth'));
+// TODO: CRUD: Eventos
+// TODO: Email: Registro y Reestablecer Password
 
 // Escuchar Peticiones
 app.listen(process.env.PORT, () => {
