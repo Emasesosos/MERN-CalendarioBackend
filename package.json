@@ -20,6 +20,7 @@
     },
     "homepage": "https://github.com/Emasesosos/MERN-CalendarioBackend#readme",
     "dependencies": {
+        "dotenv": "^8.2.0",
         "express": "^4.17.1"
     }
 }
