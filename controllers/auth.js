@@ -1,11 +1,12 @@
 const { response } = require('express');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 
 // Crear Usuario
 const crearUsuario = async(req, res = response) => {
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
 
@@ -19,6 +20,11 @@ const crearUsuario = async(req, res = response) => {
         }
 
         usuario = new Usuario(req.body);
+
+        // Encriptar contraseña
+        const salt = bcrypt.genSaltSync();
+        usuario.password = bcrypt.hashSync(password, salt);
+
         await usuario.save();
 
         res.status(201).json({
