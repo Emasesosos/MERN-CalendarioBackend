@@ -2,6 +2,7 @@ const { response } = require('express');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
+const { generarJWT } = require('../helpers/jwt');
 
 // Crear Usuario
 const crearUsuario = async(req, res = response) => {
@@ -27,10 +28,14 @@ const crearUsuario = async(req, res = response) => {
 
         await usuario.save();
 
+        // Generar nuestro JWT
+        const token = await generarJWT(usuario.id, usuario.name);
+
         res.status(201).json({
             ok: true,
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            token
         });
 
     } catch (error) {
@@ -69,11 +74,13 @@ const loginUsuario = async(req, res = response) => {
         }
 
         // Generar nuestro JWT
+        const token = await generarJWT(usuario.id, usuario.name);
 
         res.status(201).json({
             ok: true,
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            token
         });
 
 
@@ -120,11 +127,15 @@ const restablecerContrasena = async(req, res = response) => {
         usuario = await Usuario.findByIdAndUpdate({ _id: usuario.id }, { $set: nuevoPassword }, { new: true });
         // console.log('Después: ', usuario);
 
+        // Generar nuestro JWT
+        const token = await generarJWT(usuario.id, usuario.name);
+
         res.status(201).json({
             ok: true,
             msg: 'Cambio de Contraseña Exitoso',
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            token
         });
 
     } catch (error) {
