@@ -63,16 +63,48 @@ const revalidarToken = (req, res = response) => {
     });
 };
 // Reestablecer Contraseña
-const restablecerContrasena = (req, res = response) => {
+const restablecerContrasena = async(req, res = response) => {
 
-    const { email, password } = req.body;
+    const { email, password: newPassword } = req.body;
 
-    res.status(201).json({
-        ok: true,
-        msg: 'Restablecer Contrasena',
-        email,
-        password
-    });
+    try {
+
+        let usuario = await Usuario.findOne({ email: email });
+        // console.log('Antes: ', usuario);
+        if (!usuario) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No existe usuario con ese correo'
+            });
+        }
+
+        // Almacenar nuevo password para actualizar
+        const nuevoPassword = {};
+        nuevoPassword.password = newPassword;
+
+        // Encriptar contraseña
+        const salt = bcrypt.genSaltSync();
+        nuevoPassword.password = bcrypt.hashSync(newPassword, salt);
+
+        usuario = await Usuario.findByIdAndUpdate({ _id: usuario.id }, { $set: nuevoPassword }, { new: true });
+        // console.log('Después: ', usuario);
+
+        res.status(201).json({
+            ok: true,
+            msg: 'Cambio de Contraseña Exitoso',
+            uid: usuario.id,
+            name: usuario.name
+        });
+
+    } catch (error) {
+
+        // console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Por favor hable con el Administrador'
+        });
+
+    }
 
 };
 // Enviar Email Confirma Registro
@@ -95,7 +127,7 @@ const enviarCorreoRegistro = (req, res = response) => {
         from: "Remitente",
         to: email,
         subject: "Enviado desde nodemailer",
-        text: "¡Hola Mundo!",
+        text: "¡Registro Exitoso!",
     }
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -132,7 +164,7 @@ const enviarCorreoRestableceContrasena = (req, res = response) => {
         from: "Remitente",
         to: email,
         subject: "Enviado desde nodemailer",
-        text: "¡Hola Mundo!",
+        text: "¡Cambio de Contraseña Exitoso!",
     }
 
     transporter.sendMail(mailOptions, (error, info) => {
