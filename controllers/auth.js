@@ -1,21 +1,10 @@
 const { response } = require('express');
-const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 
 // Crear Usuario
 const crearUsuario = (req, res = response) => {
 
     const { name, email, password } = req.body;
-
-    // Manejo de errores
-    const errors = validationResult(req);
-    //   console.log(errors);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errors: errors.mapped(),
-        });
-    }
 
     res.status(201).json({
         ok: true,
@@ -30,16 +19,6 @@ const crearUsuario = (req, res = response) => {
 const loginUsuario = (req, res = response) => {
 
     const { email, password } = req.body;
-
-    // Manejo de errores
-    const errors = validationResult(req);
-    //   console.log(errors);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errors: errors.mapped(),
-        });
-    }
 
     res.status(201).json({
         ok: true,
@@ -61,16 +40,6 @@ const restablecerContrasena = (req, res = response) => {
 
     const { email, password } = req.body;
 
-    // Manejo de errores
-    const errors = validationResult(req);
-    //   console.log(errors);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errors: errors.mapped(),
-        });
-    }
-
     res.status(201).json({
         ok: true,
         msg: 'Restablecer Contrasena',
@@ -82,17 +51,7 @@ const restablecerContrasena = (req, res = response) => {
 // Enviar Email Confirma Registro
 const enviarCorreoRegistro = (req, res = response) => {
 
-    const { email } = req.body;
-
-    // Manejo de errores
-    const errors = validationResult(req);
-    //   console.log(errors);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errors: errors.mapped(),
-        });
-    }
+    const { name, email } = req.body;
 
     // Enviar correo con Nodemailer
     const transporter = nodemailer.createTransport({
@@ -119,6 +78,7 @@ const enviarCorreoRegistro = (req, res = response) => {
             res.status(200).json({
                 ok: true,
                 msg: 'Send Mail Register',
+                name,
                 email,
             });
         }
@@ -128,17 +88,7 @@ const enviarCorreoRegistro = (req, res = response) => {
 // Enviar Email Confirma Restablecer Contraseña
 const enviarCorreoRestableceContrasena = (req, res = response) => {
 
-    const { email } = req.body;
-
-    // Manejo de errores
-    const errors = validationResult(req);
-    //   console.log(errors);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errors: errors.mapped(),
-        });
-    }
+    const { name, email } = req.body;
 
     // Enviar correo con Nodemailer
     const transporter = nodemailer.createTransport({
@@ -165,6 +115,7 @@ const enviarCorreoRestableceContrasena = (req, res = response) => {
             res.status(200).json({
                 ok: true,
                 msg: 'Send Mail Restablish Pass',
+                name,
                 email,
             });
         }
