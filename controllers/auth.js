@@ -1,5 +1,6 @@
 const { response } = require('express');
 const { validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
 
 // Crear Usuario
 const crearUsuario = (req, res = response) => {
@@ -93,10 +94,34 @@ const enviarCorreoRegistro = (req, res = response) => {
         });
     }
 
-    res.status(200).json({
-        ok: true,
-        msg: 'Send Mail Register',
-        email,
+    // Enviar correo con Nodemailer
+    const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false,
+        auth: {
+            user: "alaina46@ethereal.email",
+            pass: "WREhp6bz9Kt1RGPT8H",
+        }
+    });
+
+    const mailOptions = {
+        from: "Remitente",
+        to: email,
+        subject: "Enviado desde nodemailer",
+        text: "¡Hola Mundo!",
+    }
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else {
+            res.status(200).json({
+                ok: true,
+                msg: 'Send Mail Register',
+                email,
+            });
+        }
     });
 
 };
@@ -115,10 +140,34 @@ const enviarCorreoRestableceContrasena = (req, res = response) => {
         });
     }
 
-    res.status(200).json({
-        ok: true,
-        msg: 'Send Mail Restablish Pass',
-        email,
+    // Enviar correo con Nodemailer
+    const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false,
+        auth: {
+            user: "alaina46@ethereal.email",
+            pass: "WREhp6bz9Kt1RGPT8H",
+        }
+    });
+
+    const mailOptions = {
+        from: "Remitente",
+        to: email,
+        subject: "Enviado desde nodemailer",
+        text: "¡Hola Mundo!",
+    }
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else {
+            res.status(200).json({
+                ok: true,
+                msg: 'Send Mail Restablish Pass',
+                email,
+            });
+        }
     });
 
 };
