@@ -24,7 +24,7 @@ app.use(express.json());
 // TODO: Auth => Crear, Login, Renew
 app.use('/api/auth', require('./routes/auth'));
 // TODO: CRUD: Eventos
-// TODO: Email: Registro y Reestablecer Password
+app.use('/api/events', require('./routes/events'));
 
 // Escuchar Peticiones
 app.listen(process.env.PORT, () => {
