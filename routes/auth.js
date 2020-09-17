@@ -13,6 +13,7 @@ const {
     enviarCorreoRegistro,
     enviarCorreoRestableceContrasena
 } = require('../controllers/auth');
+const { validarJWT } = require('../middlewares/validar-jwt');
 const router = Router();
 
 // Crear Usuario
@@ -36,7 +37,7 @@ router.post(
     loginUsuario
 );
 // Revalidar Token para Usuario
-router.get('/renew', revalidarToken);
+router.get('/renew', validarJWT, revalidarToken);
 // Reestablecer Contraseña
 router.put(
     '/restablish-pass', [ // Middlewares
@@ -49,7 +50,6 @@ router.put(
 // Enviar Email Confirma Registro
 router.post(
     '/send-mail', [
-        check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').isEmail(),
         validarCampos
     ],
@@ -58,7 +58,6 @@ router.post(
 // Enviar Email Confirma Restablecer Contraseña
 router.post(
     '/resend-mail', [
-        check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').isEmail(),
         validarCampos
     ],
