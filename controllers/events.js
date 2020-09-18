@@ -1,7 +1,10 @@
 const { response } = require("express");
 
 // Crear Eventos
-const crearEvento = async (req, res = response) => {
+const crearEvento = async(req, res = response) => {
+
+    // Verificar el contenido del evento
+    console.log(req.body);
 
     res.status(201).json({
         ok: true,
