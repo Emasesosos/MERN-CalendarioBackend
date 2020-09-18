@@ -1,10 +1,14 @@
 const { response } = require("express");
+const Evento = require('../models/Evento');
 
 // Crear Eventos
 const crearEvento = async(req, res = response) => {
 
     // Verificar el contenido del evento
     console.log(req.body);
+
+    // const event = new Evento(req.body);
+    // await event.save();
 
     res.status(201).json({
         ok: true,
