@@ -30,11 +30,14 @@ const crearEvento = async(req, res = response) => {
 
 };
 // Obtener Eventos
-const getEventos = (req, res = response) => {
+const getEventos = async(req, res = response) => {
+
+    const eventos = await Evento.find()
+        .populate('user', 'name');
 
     res.status(201).json({
         ok: true,
-        msg: 'Obtener Eventos',
+        eventos
     });
 
 };
