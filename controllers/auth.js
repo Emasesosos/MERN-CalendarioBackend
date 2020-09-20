@@ -168,46 +168,67 @@ const enviarCorreoRegistro = async(req, res = response) => {
         const usuario = await Usuario.findOne({ email: email });
         const { name } = usuario;
 
-        // Enviar correo con Nodemailer
-        const transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false,
-            auth: {
-                user: "nat.reinger@ethereal.email",
-                pass: "uNrUxaggy3qe6cvdbw",
-            }
-        });
-
-        const mailOptions = {
-            from: "Remitente",
-            to: email,
-            subject: "Enviado desde nodemailer",
-            text: `¡${ name } tu Registro ha sido Exitoso!`,
-        }
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                res.status(500).send(error.message);
-            } else {
-                res.status(200).json({
-                    ok: true,
-                    msg: 'Send Mail Register',
-                    name,
-                    email,
-                });
-            }
+        res.status(200).json({
+            ok: true,
+            msg: 'Send Mail Register',
+            name,
+            email,
         });
 
     } catch (error) {
 
-        // console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Por favor hable con el Administrador'
         });
 
     }
+
+    // try {
+
+    //     const usuario = await Usuario.findOne({ email: email });
+    //     const { name } = usuario;
+
+    //     // Enviar correo con Nodemailer
+    //     const transporter = nodemailer.createTransport({
+    //         host: "smtp.ethereal.email",
+    //         port: 587,
+    //         secure: false,
+    //         auth: {
+    //             user: "nat.reinger@ethereal.email",
+    //             pass: "uNrUxaggy3qe6cvdbw",
+    //         }
+    //     });
+
+    //     const mailOptions = {
+    //         from: "Remitente",
+    //         to: email,
+    //         subject: "Enviado desde nodemailer",
+    //         text: `¡${ name } tu Registro ha sido Exitoso!`,
+    //     }
+
+    //     transporter.sendMail(mailOptions, (error, info) => {
+    //         if (error) {
+    //             res.status(500).send(error.message);
+    //         } else {
+    //             res.status(200).json({
+    //                 ok: true,
+    //                 msg: 'Send Mail Register',
+    //                 name,
+    //                 email,
+    //             });
+    //         }
+    //     });
+
+    // } catch (error) {
+
+    //     // console.log(error);
+    //     res.status(500).json({
+    //         ok: false,
+    //         msg: 'Por favor hable con el Administrador'
+    //     });
+
+    // }
 
 };
 // Enviar Email Confirma Restablecer Contraseña
@@ -220,46 +241,67 @@ const enviarCorreoRestableceContrasena = async(req, res = response) => {
         const usuario = await Usuario.findOne({ email: email });
         const { name } = usuario;
 
-        // Enviar correo con Nodemailer
-        const transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false,
-            auth: {
-                user: "nat.reinger@ethereal.email",
-                pass: "uNrUxaggy3qe6cvdbw",
-            }
-        });
-
-        const mailOptions = {
-            from: "Remitente",
-            to: email,
-            subject: "Enviado desde nodemailer",
-            text: `¡${ name } el cambio de contraseña ha sido exitoso!`,
-        }
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                res.status(500).send(error.message);
-            } else {
-                res.status(200).json({
-                    ok: true,
-                    msg: 'Send Mail Restablish Pass',
-                    name,
-                    email,
-                });
-            }
+        res.status(200).json({
+            ok: true,
+            msg: 'Send Mail Restablish Pass',
+            name,
+            email,
         });
 
     } catch (error) {
 
-        // console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Por favor hable con el Administrador'
         });
 
     }
+
+    // try {
+
+    //     const usuario = await Usuario.findOne({ email: email });
+    //     const { name } = usuario;
+
+    //     // Enviar correo con Nodemailer
+    //     const transporter = nodemailer.createTransport({
+    //         host: "smtp.ethereal.email",
+    //         port: 587,
+    //         secure: false,
+    //         auth: {
+    //             user: "nat.reinger@ethereal.email",
+    //             pass: "uNrUxaggy3qe6cvdbw",
+    //         }
+    //     });
+
+    //     const mailOptions = {
+    //         from: "Remitente",
+    //         to: email,
+    //         subject: "Enviado desde nodemailer",
+    //         text: `¡${ name } el cambio de contraseña ha sido exitoso!`,
+    //     }
+
+    //     transporter.sendMail(mailOptions, (error, info) => {
+    //         if (error) {
+    //             res.status(500).send(error.message);
+    //         } else {
+    //             res.status(200).json({
+    //                 ok: true,
+    //                 msg: 'Send Mail Restablish Pass',
+    //                 name,
+    //                 email,
+    //             });
+    //         }
+    //     });
+
+    // } catch (error) {
+
+    //     // console.log(error);
+    //     res.status(500).json({
+    //         ok: false,
+    //         msg: 'Por favor hable con el Administrador'
+    //     });
+
+    // }
 
 };
 
