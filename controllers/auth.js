@@ -170,7 +170,7 @@ const enviarCorreoRegistro = async(req, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msg: 'Send Mail Register',
+            msg: 'Se envió correo de confirmación',
             name,
             email,
         });
@@ -243,7 +243,7 @@ const enviarCorreoRestableceContrasena = async(req, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msg: 'Send Mail Restablish Pass',
+            msg: 'Se envió correo de confirmación',
             name,
             email,
         });
